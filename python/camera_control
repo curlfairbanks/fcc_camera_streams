@@ -1,3 +1,61 @@
-#!/bin/env python
+#!/usr/bin/python
+import os
+import time
 
-print("hello world")
+
+##
+# EDIT IF NEEDED
+##
+channels=[
+          "SHEET@1NR","SHEET@1FR",
+          "SHEET@2NR","SHEET@2FR",
+          "SHEET@3NR","SHEET@3FR",
+          "SHEET@4NR","SHEET@4FR",
+          "SHEET@5NR","SHEET@5FR",
+          "SHEET@6NR","SHEET@6FR",
+         ]
+
+fifo_path="/tmp/cameractl.fifo"
+
+##################################
+##
+#  DO NOT EDIT BEYOND THIS POINT
+##
+##################################
+def channel_up():
+  next_channel=(current_channel+1) % num_channels
+  retval=os.system("sudo -n systemctl start {}".format(channels[next_channel]))
+  if retval == 0: 
+    print("chan Up: {}:{} -> {}:{}".format(current_channel,channels[current_channel],next_channel,channels[next_channel]))
+    return next_channel
+  else:
+    print("ERROR: chan Up: {}:{} -> {}:{}".format(current_channel,channels[current_channel],next_channel,channels[next_channel]))
+    return current_channel
+
+def channel_down():
+  next_channel=(current_channel-1) % num_channels
+  retval=os.system("sudo -n systemctl start {}".format(channels[next_channel]))
+  if retval == 0: 
+    print("chan Down: {}:{} -> {}:{}".format(current_channel,channels[current_channel],next_channel,channels[next_channel]))
+    return next_channel
+  else:
+    print("ERROR: chan Down: {}:{} -> {}:{}".format(current_channel,channels[current_channel],next_channel,channels[next_channel]))
+    return current_channel
+  return next_channel
+
+if os.path.exists(fifo_path): os.remove(fifo_path) 
+
+os.mkfifo(fifo_path)
+
+current_channel=0
+num_channels=len(channels)
+
+with open(fifo_path,"r") as fifo:
+    while True:
+        data = fifo.readline()
+        if data  == "": 
+          time.sleep(0.1)
+          continue
+        if data[0].upper()=='U': current_channel=channel_up() 
+        if data[0].upper()=='D': current_channel=channel_down() 
+print("done")
