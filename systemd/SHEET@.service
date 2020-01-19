@@ -9,12 +9,13 @@ Conflicts=SHEET@1NR.service SHEET@2NR.service SHEET@3NR.service SHEET@4NR.servic
 
 
 AssertPathExists=/usr/bin//omxplayer
+AssertPathExists=/etc/omxplayer/SHEET@%i.config
 StartLimitBurst=100
 
 [Service]
 #Read the OMAXPLAYER_COMMMAND envvar from this location:
 #ENVIRONMENTFILE=/etc/omxplayer/SHEET@%i.config
-ExecStart=/bin/bash -c "source /etc/omxplayer/SHEET@%i.config; /usr/bin/omxplayer --win '0 0 1920 1080' $OMXPLAYER_OPTIONS $RTSP_FEED"
+ExecStart=/bin/bash -c "source /etc/omxplayer/SHEET@%i.config; /usr/bin/omxplayer -b -o hdmi --win '0 0 1920 1080' $OMXPLAYER_OPTIONS $RTSP_FEED"
 Restart=always
 RestartSec=0.5
 NoNewPrivileges=true
