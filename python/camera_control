@@ -1,4 +1,6 @@
 #!/usr/bin/python
+from gpiozero.exc import *
+from gpiozero import Button
 import os
 import time
 
@@ -17,14 +19,45 @@ channels=[
 
 fifo_path="/tmp/cameractl.fifo"
 
+# GPIO Button pins
+# Ref: https://gpiozero.readthedocs.io/en/stable/recipes.html#pin-numbering
+# up: GPIO17  down: GPIO27
+try:
+  ubtn=Button(17)
+  dbtn=Button(27)
+except BadPinFactory:
+  print("WARNING: Cannot find GPIO pins, disabling GPIO button support")
+  ubtn=None
+  dbtn=None
+
 ##################################
 ##
 #  DO NOT EDIT BEYOND THIS POINT
 ##
 ##################################
+num_channels=len(channels)
+current_channel=0
+
+def flush_fifo(f):
+  print("flushing fifo")
+  d=f.read()
+  while len(d) > 0 :
+    d=f.read()
+  print("done flushing fifo")
+
+def btn_pressed(btn):
+  if btn:
+    print("Caught Button Press") 
+    return btn.is_pressed
+  else: return False
+
+def activate_channel(cnum):
+  print("Activating {}".format(channels[cnum]))
+  retval=os.system("sudo -n systemctl start {}".format(channels[cnum]))
+  return retval
 def channel_up():
   next_channel=(current_channel+1) % num_channels
-  retval=os.system("sudo -n systemctl start {}".format(channels[next_channel]))
+  retval=activate_channel(next_channel)
   if retval == 0: 
     print("chan Up: {}:{} -> {}:{}".format(current_channel,channels[current_channel],next_channel,channels[next_channel]))
     return next_channel
@@ -34,7 +67,7 @@ def channel_up():
 
 def channel_down():
   next_channel=(current_channel-1) % num_channels
-  retval=os.system("sudo -n systemctl start {}".format(channels[next_channel]))
+  retval=activate_channel(next_channel)
   if retval == 0: 
     print("chan Down: {}:{} -> {}:{}".format(current_channel,channels[current_channel],next_channel,channels[next_channel]))
     return next_channel
@@ -46,16 +79,27 @@ def channel_down():
 if os.path.exists(fifo_path): os.remove(fifo_path) 
 
 os.mkfifo(fifo_path)
+fd=os.open(fifo_path,os.O_RDONLY | os.O_NONBLOCK)
+fifo=os.fdopen(fd)
+##
+# TODO: Select startup channel from argument 
+##
+retval=activate_channel(current_channel)
 
-current_channel=0
-num_channels=len(channels)
-
-with open(fifo_path,"r") as fifo:
-    while True:
-        data = fifo.readline()
-        if data  == "": 
-          time.sleep(0.1)
-          continue
-        if data[0].upper()=='U': current_channel=channel_up() 
-        if data[0].upper()=='D': current_channel=channel_down() 
+print("Entering wait loop")
+while True:
+  data = fifo.readline()
+  if data  == "": 
+    time.sleep(0.1)
+    continue
+  if data[0].upper()=='U' or btn_pressed(ubtn): 
+    current_channel=channel_up()
+    flush_fifo(fifo)
+    time.sleep(1) 
+  if data[0].upper()=='D'or btn_pressed(dbtn): 
+    current_channel=channel_down() 
+    flush_fifo(fifo)
+    time.sleep(1)
+ 
 print("done")
+fifo.close()
