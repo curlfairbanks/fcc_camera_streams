@@ -1,0 +1,16 @@
+[Unit]
+Description=Camera Switcher Controller service
+After=network.target
+
+
+AssertPathExists=/usr/local/bin/camera_control
+
+[Service]
+ExecStart=/bin/bash -c "/usr/local/bin/camera_control"
+Restart=always
+RestartSec=1
+NoNewPrivileges=true
+
+[Install]
+WantedBy=default.target
+
