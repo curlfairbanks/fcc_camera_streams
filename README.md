@@ -6,7 +6,7 @@ Scripts for FCC cameras
 1. Pull this repo down to the raspi
 2. Run the intall.sh script as root ... sudo is your friend
 3. create the `/etc/omxplayer/` directory and populate it with correct configurations for each camera.  Config files should match service names:
-Ex: `SHEET@1NR -> camera 1 near`  `SHEET@2FR` -> camera 2 far` See the Conflicts directive in the systemd template service `SHEET@.service` for full list of supported cam names.
+Ex: `SHEET@1NR -> camera 1 near`  `SHEET@2FR -> camera 2 far` See the Conflicts directive in the systemd template service `SHEET@.service` for full list of supported cam names.
 4. start the camera_control service: `sudo systemctl start camera_control`
 
 ### Manual Channel Up
