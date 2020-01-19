@@ -1,0 +1,24 @@
+[Unit]
+Description=Omxplayer for Sheet %I
+After=network.target
+
+# Set the conflicts so systemd will stop the conflicting running service if its running.
+Conflicts=SHEET@1NR.service SHEET@2NR.service SHEET@3NR.service SHEET@4NR.service SHEET@5NR.service SHEET@6NR.service \
+          SHEET@1FR.service SHEET@2FR.service SHEET@3FR.service SHEET@4FR.service SHEET@5FR.service SHEET@6FR.service \
+          SHEET@W1_3FR.service SHEET@W1_3NR.service SHEET@W4_6FR.service SHEET@W4_6NR.service
+
+
+AssertPathExists=/usr/bin//omxplayer
+StartLimitBurst=100
+
+[Service]
+#Read the OMAXPLAYER_COMMMAND envvar from this location:
+#ENVIRONMENTFILE=/etc/omxplayer/SHEET@%i.config
+ExecStart=/bin/bash -c "source /etc/omxplayer/SHEET@%i.config; /usr/bin/omxplayer --win '0 0 1920 1080' $OMXPLAYER_OPTIONS $RTSP_FEED"
+Restart=always
+RestartSec=0.5
+NoNewPrivileges=true
+
+[Install]
+WantedBy=default.target
+
