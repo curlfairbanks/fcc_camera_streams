@@ -27,13 +27,11 @@ fifo_path="/tmp/cameractl.fifo"
 try:
   print("GPIO17 -> UP")
   ubtn=Button(17)
-  dbtn.when_pressed=up_btn_pressed
   print(ubtn)
   print("GPIO27 -> DOWN")
   dbtn=Button(27)
   print(dbtn)
   sys.stdout.flush()
-  dbtn.when_pressed=down_btn_pressed
 except BadPinFactory:
   print("WARNING: Cannot find GPIO pins, disabling GPIO button support")
   sys.stdout.flush()
@@ -111,6 +109,9 @@ fifo=os.fdopen(fd)
 # TODO: Select startup channel from argument 
 ##
 retval=activate_channel(current_channel)
+
+if ubtn: ubtn.when_pressed=up_btn_pressed
+if dbtn: dbtn.when_pressed=down_btn_pressed
 
 print("Entering fifo wait loop")
 sys.stdout.flush()
