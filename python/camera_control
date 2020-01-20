@@ -26,8 +26,8 @@ fifo_path="/tmp/cameractl.fifo"
 # up: GPIO17  down: GPIO27
 try:
   print("GPIO17 -> UP")
-  print(ubtn)
   ubtn=Button(17)
+  print(ubtn)
   print("GPIO27 -> DOWN")
   dbtn=Button(27)
   print(dbtn)
