@@ -77,10 +77,11 @@ def activate_channel(cnum):
 
 def channel_up(skip_broken=False):
   start_channel=current_channel
+  next_channel=start_channel 
   attempt=0
   while attempt < 20:
     attempt=attempt+1
-    next_channel=(start_channel+1) % num_channels
+    next_channel=(next__channel+1) % num_channels
     retval=activate_channel(next_channel)
     if skip_broken:
       if next_channel==start_channel: break
@@ -99,10 +100,11 @@ def channel_up(skip_broken=False):
 
 def channel_down(skip_broken=False):
   start_channel=current_channel
+  next_channel=start_channel 
   attempt=0
   while attempt < 20:
     attempt=attempt+1
-    next_channel=(start_channel-1) % num_channels
+    next_channel=(next_channel-1) % num_channels
     retval=activate_channel(next_channel)
     if skip_broken:
       if next_channel == start_channel: break
