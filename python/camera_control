@@ -112,6 +112,8 @@ while True:
 
   if data[0].upper()=='U': 
     print("fifo UP command recv'd")
+    print(ubtn)
+    print(dbtn)
     sys.stdout.flush()
     current_channel=channel_up()
     flush_fifo(fifo)
@@ -120,6 +122,8 @@ while True:
 
   if btn_pressed(ubtn):
     print("Up GPIO Button pressed")
+    print(ubtn)
+    print(dbtn)
     sys.stdout.flush()
     current_channel=channel_up()
     flush_fifo(fifo)
@@ -128,6 +132,8 @@ while True:
 
   if data[0].upper()=='D':
     print("fifo DOWN command recv'd")
+    print(ubtn)
+    print(dbtn)
     sys.stdout.flush()
     current_channel=channel_down() 
     flush_fifo(fifo)
@@ -136,6 +142,8 @@ while True:
 
   if btn_pressed(dbtn): 
     print("Down GPIO Button pressed")
+    print(ubtn)
+    print(dbtn)
     sys.stdout.flush()
     current_channel=channel_down() 
     flush_fifo(fifo)
