@@ -108,7 +108,7 @@ while True:
     time.sleep(0.1)
     continue
 
-  if data[0].upper()=='U' 
+  if data[0].upper()=='U': 
     print("fifo UP command recv'd")
     sys.stdout.flush()
     current_channel=channel_up()
@@ -124,7 +124,7 @@ while True:
     time.sleep(1) 
     continue
 
-  if data[0].upper()=='D'
+  if data[0].upper()=='D':
     print("fifo DOWN command recv'd")
     sys.stdout.flush()
     current_channel=channel_down() 
