@@ -3,7 +3,7 @@ from gpiozero.exc import *
 from gpiozero import Button
 import os
 import time
-
+import sys
 
 ##
 # EDIT IF NEEDED
@@ -15,6 +15,8 @@ channels=[
           "SHEET@4NR","SHEET@4FR",
           "SHEET@5NR","SHEET@5FR",
           "SHEET@6NR","SHEET@6FR",
+          "SHEET@W1_3FR", "SHEET@W1_3NR", 
+          "SHEET@W4_6FR", "SHEET@W4_6NR"
          ]
 
 fifo_path="/tmp/cameractl.fifo"
@@ -27,6 +29,7 @@ try:
   dbtn=Button(27)
 except BadPinFactory:
   print("WARNING: Cannot find GPIO pins, disabling GPIO button support")
+  sys.stdout.flush()
   ubtn=None
   dbtn=None
 
@@ -40,19 +43,23 @@ current_channel=0
 
 def flush_fifo(f):
   print("flushing fifo")
+  sys.stdout.flush()
   d=f.read()
   while len(d) > 0 :
     d=f.read()
   print("done flushing fifo")
+  sys.stdout.flush()
 
 def btn_pressed(btn):
   if btn:
     print("Caught Button Press") 
+    sys.stdout.flush()
     return btn.is_pressed
   else: return False
 
 def activate_channel(cnum):
   print("Activating {}".format(channels[cnum]))
+  sys.stdout.flush()
   retval=os.system("sudo -n systemctl start {}".format(channels[cnum]))
   return retval
 def channel_up():
@@ -60,9 +67,11 @@ def channel_up():
   retval=activate_channel(next_channel)
   if retval == 0: 
     print("chan Up: {}:{} -> {}:{}".format(current_channel,channels[current_channel],next_channel,channels[next_channel]))
+    sys.stdout.flush()
     return next_channel
   else:
     print("ERROR: chan Up: {}:{} -> {}:{}".format(current_channel,channels[current_channel],next_channel,channels[next_channel]))
+    sys.stdout.flush()
     return current_channel
 
 def channel_down():
@@ -70,9 +79,11 @@ def channel_down():
   retval=activate_channel(next_channel)
   if retval == 0: 
     print("chan Down: {}:{} -> {}:{}".format(current_channel,channels[current_channel],next_channel,channels[next_channel]))
+    sys.stdout.flush()
     return next_channel
   else:
     print("ERROR: chan Down: {}:{} -> {}:{}".format(current_channel,channels[current_channel],next_channel,channels[next_channel]))
+    sys.stdout.flush()
     return current_channel
   return next_channel
 
@@ -87,6 +98,7 @@ fifo=os.fdopen(fd)
 retval=activate_channel(current_channel)
 
 print("Entering wait loop")
+sys.stdout.flush()
 while True:
   data = fifo.readline()
   if data  == "": 
@@ -102,4 +114,5 @@ while True:
     time.sleep(1)
  
 print("done")
+sys.stdout.flush()
 fifo.close()
