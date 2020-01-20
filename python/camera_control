@@ -154,7 +154,10 @@ while True:
   if data[0].upper()=='B':
     print("fifo BUTTON command recv'd")
     for x in range(28):
-      print(Button(x))
+      if x == 17: print(ubtn)
+      else if x == 27: print(dbtn)
+      else:
+        print(Button(x))
     sys.stdout.flush()
     flush_fifo(fifo)
     time.sleep(1)
