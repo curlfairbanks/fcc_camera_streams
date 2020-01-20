@@ -57,14 +57,14 @@ def flush_fifo(f):
   print("done flushing fifo")
   sys.stdout.flush()
 
-def down_btn_pressed()
+def down_btn_pressed():
     print("Caught Down Button Press") 
     print(ubtn)
     print(dbtn)
     sys.stdout.flush()
     current_channel=channel_down()
 
-def up_btn_pressed()
+def up_btn_pressed():
     print("Caught Up Button Press") 
     print(ubtn)
     print(dbtn)
