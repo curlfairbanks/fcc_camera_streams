@@ -155,9 +155,9 @@ while True:
     print("fifo BUTTON command recv'd")
     for x in range(28):
       if x == 17: print(ubtn)
-      else if x == 27: print(dbtn)
       else:
-        print(Button(x))
+        if x == 27: print(dbtn)
+        else: print(Button(x))
     sys.stdout.flush()
     flush_fifo(fifo)
     time.sleep(1)
