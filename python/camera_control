@@ -67,6 +67,7 @@ def activate_channel(cnum):
   sys.stdout.flush()
   retval=os.system("sudo -n systemctl start {}".format(channels[cnum]))
   return retval
+
 def channel_up():
   next_channel=(current_channel+1) % num_channels
   retval=activate_channel(next_channel)
@@ -146,6 +147,15 @@ while True:
     print(dbtn)
     sys.stdout.flush()
     current_channel=channel_down() 
+    flush_fifo(fifo)
+    time.sleep(1)
+    continue
+
+  if data[0].upper()=='B':
+    print("fifo BUTTON command recv'd")
+    print(ubtn)
+    print(dbtn)
+    sys.stdout.flush()
     flush_fifo(fifo)
     time.sleep(1)
     continue
