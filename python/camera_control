@@ -25,8 +25,11 @@ fifo_path="/tmp/cameractl.fifo"
 # Ref: https://gpiozero.readthedocs.io/en/stable/recipes.html#pin-numbering
 # up: GPIO17  down: GPIO27
 try:
+  print("GPIO17 -> UP")
   ubtn=Button(17)
+  print("GPIO27 -> DOWN")
   dbtn=Button(27)
+  sys.stdout.flush()
 except BadPinFactory:
   print("WARNING: Cannot find GPIO pins, disabling GPIO button support")
   sys.stdout.flush()
@@ -104,15 +107,39 @@ while True:
   if data  == "": 
     time.sleep(0.1)
     continue
-  if data[0].upper()=='U' or btn_pressed(ubtn): 
+
+  if data[0].upper()=='U' 
+    print("fifo UP command recv'd")
+    sys.stdout.flush()
     current_channel=channel_up()
     flush_fifo(fifo)
     time.sleep(1) 
-  if data[0].upper()=='D'or btn_pressed(dbtn): 
+    continue
+
+  if btn_pressed(ubtn):
+    print("Up GPIO Button pressed")
+    sys.stdout.flush()
+    current_channel=channel_up()
+    flush_fifo(fifo)
+    time.sleep(1) 
+    continue
+
+  if data[0].upper()=='D'
+    print("fifo DOWN command recv'd")
+    sys.stdout.flush()
     current_channel=channel_down() 
     flush_fifo(fifo)
     time.sleep(1)
- 
+    continue
+
+  if btn_pressed(dbtn): 
+    print("Down GPIO Button pressed")
+    sys.stdout.flush()
+    current_channel=channel_down() 
+    flush_fifo(fifo)
+    time.sleep(1)
+    continue
+
 print("done")
 sys.stdout.flush()
 fifo.close()
