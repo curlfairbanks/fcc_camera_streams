@@ -60,14 +60,14 @@ def down_btn_pressed():
     print(ubtn)
     print(dbtn)
     sys.stdout.flush()
-    current_channel=channel_down()
+    current_channel=channel_down(True)
 
 def up_btn_pressed():
     print("Caught Up Button Press") 
     print(ubtn)
     print(dbtn)
     sys.stdout.flush()
-    current_channel=channel_up()
+    current_channel=channel_up(True)
 
 def activate_channel(cnum):
   print("Activating {}".format(channels[cnum]))
@@ -75,9 +75,19 @@ def activate_channel(cnum):
   retval=os.system("sudo -n systemctl start {}".format(channels[cnum]))
   return retval
 
-def channel_up():
-  next_channel=(current_channel+1) % num_channels
-  retval=activate_channel(next_channel)
+def channel_up(skip_broken=False):
+  start_channel=current_channel
+  attempt=0
+  while attempt < 20:
+    attempt=attempt+1
+    next_channel=(start_channel+1) % num_channels
+    retval=activate_channel(next_channel)
+    if skip_broken:
+      if next_channel==start_channel: break
+      else:
+        if retval==0: break
+        else: continue  
+    else: break
   if retval == 0: 
     print("chan Up: {}:{} -> {}:{}".format(current_channel,channels[current_channel],next_channel,channels[next_channel]))
     sys.stdout.flush()
@@ -87,9 +97,19 @@ def channel_up():
     sys.stdout.flush()
     return current_channel
 
-def channel_down():
-  next_channel=(current_channel-1) % num_channels
-  retval=activate_channel(next_channel)
+def channel_down(skip_broken=False):
+  start_channel=current_channel
+  attempt=0
+  while attempt < 20:
+    attempt=attempt+1
+    next_channel=(start_channel-1) % num_channels
+    retval=activate_channel(next_channel)
+    if skip_broken:
+      if next_channel == start_channel: break
+      else:
+        if retval == 0: break
+        else: continue  
+    else: break
   if retval == 0: 
     print("chan Down: {}:{} -> {}:{}".format(current_channel,channels[current_channel],next_channel,channels[next_channel]))
     sys.stdout.flush()
@@ -126,7 +146,7 @@ while True:
     print(ubtn)
     print(dbtn)
     sys.stdout.flush()
-    current_channel=channel_up()
+    current_channel=channel_up(True)
     flush_fifo(fifo)
     time.sleep(1) 
     continue
@@ -136,7 +156,7 @@ while True:
     print(ubtn)
     print(dbtn)
     sys.stdout.flush()
-    current_channel=channel_down() 
+    current_channel=channel_down(True) 
     flush_fifo(fifo)
     time.sleep(1)
     continue
