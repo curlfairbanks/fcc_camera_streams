@@ -27,11 +27,13 @@ fifo_path="/tmp/cameractl.fifo"
 try:
   print("GPIO17 -> UP")
   ubtn=Button(17)
+  dbtn.when_pressed=up_btn_pressed
   print(ubtn)
   print("GPIO27 -> DOWN")
   dbtn=Button(27)
   print(dbtn)
   sys.stdout.flush()
+  dbtn.when_pressed=down_btn_pressed
 except BadPinFactory:
   print("WARNING: Cannot find GPIO pins, disabling GPIO button support")
   sys.stdout.flush()
@@ -55,12 +57,19 @@ def flush_fifo(f):
   print("done flushing fifo")
   sys.stdout.flush()
 
-def btn_pressed(btn):
-  if btn:
-    print("Caught Button Press") 
+def down_btn_pressed()
+    print("Caught Down Button Press") 
+    print(ubtn)
+    print(dbtn)
     sys.stdout.flush()
-    return btn.is_pressed
-  else: return False
+    current_channel=channel_down()
+
+def up_btn_pressed()
+    print("Caught Up Button Press") 
+    print(ubtn)
+    print(dbtn)
+    sys.stdout.flush()
+    current_channel=channel_up()
 
 def activate_channel(cnum):
   print("Activating {}".format(channels[cnum]))
@@ -103,7 +112,7 @@ fifo=os.fdopen(fd)
 ##
 retval=activate_channel(current_channel)
 
-print("Entering wait loop")
+print("Entering fifo wait loop")
 sys.stdout.flush()
 while True:
   data = fifo.readline()
@@ -121,28 +130,8 @@ while True:
     time.sleep(1) 
     continue
 
-  if btn_pressed(ubtn):
-    print("Up GPIO Button pressed")
-    print(ubtn)
-    print(dbtn)
-    sys.stdout.flush()
-    current_channel=channel_up()
-    flush_fifo(fifo)
-    time.sleep(1) 
-    continue
-
   if data[0].upper()=='D':
     print("fifo DOWN command recv'd")
-    print(ubtn)
-    print(dbtn)
-    sys.stdout.flush()
-    current_channel=channel_down() 
-    flush_fifo(fifo)
-    time.sleep(1)
-    continue
-
-  if btn_pressed(dbtn): 
-    print("Down GPIO Button pressed")
     print(ubtn)
     print(dbtn)
     sys.stdout.flush()
