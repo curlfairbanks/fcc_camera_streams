@@ -16,9 +16,7 @@ AssertPathExists=/etc/omxplayer/SHEET@%i.config
 StartLimitBurst=100
 
 [Service]
-#Read the OMAXPLAYER_COMMMAND envvar from this location:
-#ENVIRONMENTFILE=/etc/omxplayer/SHEET@%i.config
-ExecStart=/bin/bash -c "source /etc/omxplayer/SHEET@%i.config; /usr/bin/omxplayer -o hdmi --win '0 0 1920 1080' $OMXPLAYER_OPTIONS $RTSP_FEED"
+ExecStart=/bin/bash -c "/usr/local/bin/sheet_camera.sh %i"
 Restart=always
 RestartSec=0.5
 NoNewPrivileges=true

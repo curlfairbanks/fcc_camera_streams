@@ -7,7 +7,11 @@ fi
 
 echo "Installing camera control script to /usr/local/bin"
 cp python/camera_control /usr/local/bin
-cp python/sidebyside /usr/local/bin
+
+echo "Install camera shell scripts"
+cp shellscripts/sidebyside.sh /usr/local/bin
+cp shellscripts/sheet_camera.sh /usr/local/bin
+
 echo "Installing systemd services into /etc/systemd/system"
 cp systemd/SHEET@.service /etc/systemd/system
 cp systemd/SIDEBYSIDE@.service /etc/systemd/system
