@@ -6,6 +6,6 @@ if len(sys.argv < 3):
   print("Error did not supply both left and right arguments")
   exit(1)
 #left
-left=subprocess.Popen("omxplaer","--aspect-mode","Letterbox","-o","hdmi","--win", "0,0,960,1080",sysargv[1]])
+left=subprocess.Popen("omxplaer","--aspect-mode","Letterbox","-o","hdmi","--win", "0,0,960,1080",sys.argv[1]])
 #right
-right=subprocess.Popen("omxplaer","--aspect-mode","Letterbox","-o","hdmi","--win", "960,0,1920,1080",sysargv[1]])
+right=subprocess.Popen("omxplaer","--aspect-mode","Letterbox","-o","hdmi","--win", "960,0,1920,1080",sys.argv[2]])
