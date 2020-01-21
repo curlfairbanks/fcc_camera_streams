@@ -4,6 +4,7 @@ from gpiozero import Button
 import os
 import time
 import sys
+import configparser
 
 ##
 # EDIT IF NEEDED
@@ -45,8 +46,20 @@ except BadPinFactory:
 #  DO NOT EDIT BEYOND THIS POINT
 ##
 ##################################
+config = configparser.ConfigParser()
+config['DEFAULT']={'channel':'SHEET@1NR'}
+
+config.read('/etc/omxplayer/camera_control.ini')
+default_channel = config['DEFAULT']['channel']
+try:
+  default_index = channels.index(default_channel)
+except:
+  default_index = 0
+
 num_channels=len(channels)
-current_channel=0
+current_channel=default_index
+print(current_channel)
+print(channels[current_channel])
 
 def flush_fifo(f):
   print("flushing fifo")
