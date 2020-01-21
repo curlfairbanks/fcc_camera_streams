@@ -12,5 +12,5 @@ RestartSec=1
 NoNewPrivileges=true
 
 [Install]
-WantedBy=default.target
+WantedBy=sysinit.target
 
