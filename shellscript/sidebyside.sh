@@ -28,6 +28,7 @@ wait_left(){
 
 if [ -f /etc/omxplayer/credentials.config ]; then source /etc/omxplayer/credentials.config; fi
 if [ -f /etc/omxplayer/SIDEBYSIDE@${1}.config ]; then
+  source /etc/omxplayer/SIDEBYSIDE@${1}.config
   #left
   omxplayer --aspect-mode Letterbox -o hdmi --win 0,0,960,1080 $LEFT_OPTIONS & 
   LEFT_PID=$!
