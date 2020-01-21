@@ -5,7 +5,7 @@ After=network.target
 # Set the conflicts so systemd will stop the conflicting running service if its running.
 Conflicts=SHEET@1NR.service SHEET@2NR.service SHEET@3NR.service SHEET@4NR.service SHEET@5NR.service SHEET@6NR.service \
           SHEET@1FR.service SHEET@2FR.service SHEET@3FR.service SHEET@4FR.service SHEET@5FR.service SHEET@6FR.service \
-          SHEET@W1_3FR.service SHEET@W1_3NR.service SHEET@W4_6FR.service SHEET@W4_6NR.service
+          SHEET@W1_3FR.service SHEET@W1_3NR.service SHEET@W4_6FR.service SHEET@W4_6NR.service \
           SIDEBYSIDE@1.service SIDEBYSIDE@2.service SIDEBYSIDE@3.service \
           SIDEBYSIDE@4.service SIDEBYSIDE@5.service SIDEBYSIDE@6.service
 
