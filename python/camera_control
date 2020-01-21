@@ -56,6 +56,7 @@ def flush_fifo(f):
   sys.stdout.flush()
 
 def down_btn_pressed():
+    global current_channel
     print("Caught Down Button Press") 
     print(ubtn)
     print(dbtn)
@@ -63,6 +64,7 @@ def down_btn_pressed():
     current_channel=channel_down(True)
 
 def up_btn_pressed():
+    global current_channel
     print("Caught Up Button Press") 
     print(ubtn)
     print(dbtn)
@@ -76,6 +78,7 @@ def activate_channel(cnum):
   return retval
 
 def channel_up(skip_broken=False):
+  global current_channel
   start_channel=current_channel
   next_channel=start_channel 
   attempt=0
@@ -101,6 +104,7 @@ def channel_up(skip_broken=False):
     return current_channel
 
 def channel_down(skip_broken=False):
+  global current_channel
   start_channel=current_channel
   next_channel=start_channel 
   attempt=0
