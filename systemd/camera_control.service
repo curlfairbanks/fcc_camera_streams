@@ -1,6 +1,6 @@
 [Unit]
 Description=Camera Switcher Controller service
-After=network.target
+After=local-fs.target
 
 
 AssertPathExists=/usr/local/bin/camera_control
