@@ -1,6 +1,11 @@
 #!/bin/usr/python
 import os
+import sys
+import subprocess
+if len(sys.argv < 3):
+  print("Error did not supply both left and right arguments")
+  exit(1)
 #left
-os.system("/usr/bin/omxplayer --aspect-mode Letterbox -o hdmi --win '0 0 960 1080' $OMXPLAYER_LEFT_OPTIONS $LEFT_RTSP_FEED &")
+left=subprocess.Popen("omxplaer","--aspect-mode","Letterbox","-o","hdmi","--win", "0,0,960,1080",sysargv[1]])
 #right
-os.system("/usr/bin/omxplayer --aspect-mode Letterbox -o hdmi --win '960 0 1920 1080' $OMXPLAYER_RIGHT_OPTIONS $RIGHT_RTSP_FEED &")
+right=subprocess.Popen("omxplaer","--aspect-mode","Letterbox","-o","hdmi","--win", "960,0,1920,1080",sysargv[1]])
