@@ -1,24 +1,24 @@
 [Unit]
-Description=Omxplayer for Sheet %I
+Description=Side-by-Side Omxplayer for Sheet %I
 After=network.target
 
 # Set the conflicts so systemd will stop the conflicting running service if its running.
 Conflicts=SHEET@1NR.service SHEET@2NR.service SHEET@3NR.service SHEET@4NR.service SHEET@5NR.service SHEET@6NR.service \
           SHEET@1FR.service SHEET@2FR.service SHEET@3FR.service SHEET@4FR.service SHEET@5FR.service SHEET@6FR.service \
-          SHEET@W1_3FR.service SHEET@W1_3NR.service SHEET@W4_6FR.service SHEET@W4_6NR.service
+          SHEET@W1_3FR.service SHEET@W1_3NR.service SHEET@W4_6FR.service SHEET@W4_6NR.service \
           SIDEBYSIDE@1.service SIDEBYSIDE@2.service SIDEBYSIDE@3.service \
           SIDEBYSIDE@4.service SIDEBYSIDE@5.service SIDEBYSIDE@6.service
 
 
 
 AssertPathExists=/usr/bin//omxplayer
-AssertPathExists=/etc/omxplayer/SHEET@%i.config
+AssertPathExists=/etc/omxplayer/SIDEBYSIDE@%i.config
 StartLimitBurst=100
 
 [Service]
 #Read the OMAXPLAYER_COMMMAND envvar from this location:
-#ENVIRONMENTFILE=/etc/omxplayer/SHEET@%i.config
-ExecStart=/bin/bash -c "source /etc/omxplayer/SHEET@%i.config; /usr/bin/omxplayer -o hdmi --win '0 0 1920 1080' $OMXPLAYER_OPTIONS $RTSP_FEED"
+#ENVIRONMENTFILE=/etc/omxplayer/SIDEBYSIDE@%i.config
+ExecStart=/bin/bash -c "source /etc/omxplayer/SIDEBYSIDE@%i.config; /usr/local/bin/sidebyside"
 Restart=always
 RestartSec=0.5
 NoNewPrivileges=true

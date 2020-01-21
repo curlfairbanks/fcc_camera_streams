@@ -17,6 +17,8 @@ channels=[
           "SHEET@6NR","SHEET@6FR",
           "SHEET@W1_3FR", "SHEET@W1_3NR", 
           "SHEET@W4_6FR", "SHEET@W4_6NR"
+          "SIDEBYSIDE@1","SIDEBYSIDE@2","SIDEBYSIDE@3",
+          "SIDEBYSIDE@4","SIDEBYSIDE@5","SIDEBYSIDE@6"
          ]
 
 fifo_path="/tmp/cameractl.fifo"

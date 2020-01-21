@@ -1,0 +1,6 @@
+#!/bin/usr/python
+import os
+#left
+os.system("/usr/bin/omxplayer --aspect-mode Letterbox -o hdmi --win '0 0 960 1080' $OMXPLAYER_LEFT_OPTIONS $LEFT_RTSP_FEED &")
+#right
+os.system("/usr/bin/omxplayer --aspect-mode Letterbox -o hdmi --win '960 0 1920 1080' $OMXPLAYER_RIGHT_OPTIONS $RIGHT_RTSP_FEED &")
