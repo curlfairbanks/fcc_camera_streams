@@ -41,3 +41,7 @@ else
   echo "missing config file /etc/omxplayer/SHEET@${1}.config"
   exit 1
 fi
+
+while true; do
+  sleep 1
+done
