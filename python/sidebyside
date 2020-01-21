@@ -1,11 +1,7 @@
-#!/usr/bin/python
-import os
-import sys
-import subprocess
-if len(sys.argv) < 3:
-  print("Error did not supply both left and right arguments")
-  exit(1)
+#!/bin/bash
+echo "Left: $1"
+echo "Right: $2"
 #left
-left=subprocess.Popen(["omxplayer","--aspect-mode","Letterbox","-o","hdmi","--win", "0,0,960,1080",sys.argv[1]])
+omxplayer --aspect-mode Letterbox -o hdmi --win 0,0,960,1080 $1 & 
 #right
-right=subprocess.Popen(["omxplayer","--aspect-mode","Letterbox","-o","hdmi","--win", "960,0,1920,1080",sys.argv[2]])
+omxplayer --aspect-mode Leterbox -o hdmi --win 960,0,1920,1080 $2  

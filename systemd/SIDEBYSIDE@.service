@@ -18,7 +18,7 @@ StartLimitBurst=100
 [Service]
 #Read the OMAXPLAYER_COMMMAND envvar from this location:
 #ENVIRONMENTFILE=/etc/omxplayer/SIDEBYSIDE@%i.config
-ExecStart=/bin/bash -c "source /etc/omxplayer/SIDEBYSIDE@%i.config; /usr/local/bin/sidebyside $LEFT_RTSP_FEED $RIGHT_RTSP_FEED"
+ExecStart=/bin/bash -c "source /etc/omxplayer/SIDEBYSIDE@%i.config; /usr/local/bin/sidebyside $LEFT_OPTIONS $RIGHT_OPTIONS"
 Restart=always
 RestartSec=0.5
 NoNewPrivileges=true
