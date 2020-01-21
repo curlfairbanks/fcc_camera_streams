@@ -87,7 +87,9 @@ def channel_up(skip_broken=False):
       if next_channel==start_channel: break
       else:
         if retval==0: break
-        else: continue  
+        else:
+          print("Skipping broken channel {}".format(channels[next_channel])) 
+          continue  
     else: break
   if retval == 0: 
     print("chan Up: {}:{} -> {}:{}".format(current_channel,channels[current_channel],next_channel,channels[next_channel]))
@@ -110,7 +112,9 @@ def channel_down(skip_broken=False):
       if next_channel == start_channel: break
       else:
         if retval == 0: break
-        else: continue  
+        else:   
+          print("Skipping broken channel {}".format(channels[next_channel])) 
+          continue  
     else: break
   if retval == 0: 
     print("chan Down: {}:{} -> {}:{}".format(current_channel,channels[current_channel],next_channel,channels[next_channel]))
