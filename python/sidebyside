@@ -4,4 +4,4 @@ echo "Right: $2"
 #left
 omxplayer --aspect-mode Letterbox -o hdmi --win 0,0,960,1080 $1 & 
 #right
-omxplayer --aspect-mode Leterbox -o hdmi --win 960,0,1920,1080 $2  
+omxplayer --aspect-mode Letterbox -o hdmi --win 960,0,1920,1080 $2  
