@@ -1,8 +1,7 @@
 #!/bin/bash
 
-CURLREPO="https://github.com/jspaleta/fcc_camera_streams.git"
+CURLREPO="https://github.com/Hazmit/fcc_camera_streams.git"
 CAMDIR="/home/pi/curl_cam"
-BACKGROUND="https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77700439579.jpg"
 CONFIG="/boot/config.txt"
 CMDLINE="/boot/cmdline.txt"
 PACKAGES="vim screen fbi"
@@ -28,19 +27,14 @@ echo -e -n "${YELLOW}Making /etc/omxplayer directory... ${NC}"
 mkdir /etc/omxplayer
 echo -e " ${GREEN}[DONE]${NC}"
 
-#Download default background image
-echo -e -n "${YELLOW}Getting default background from URL...... ${NC}"
-wget -q https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77700439579.jpg -O back.jpg
-echo -e " ${GREEN}[DONE]${NC}"
-
 #copy splash image and backup original
 echo -e -n "${YELLOW}Backing up plymouth theme default splash image...${NC}"
 cp /usr/share/plymouth/themes/pix/splash.png /usr/share/plymouth/themes/pix/splash.png.default
 echo -e " ${GREEN}[DONE]${NC}"
 
 echo -n "Copying custom splash image..."
-cp /home/pi/back.jpg /usr/share/plymouth/themes/pix/splash.png
-cp /home/pi/back.jpg /etc/omxplayer/
+cp $CAMDIR/back.png /usr/share/plymouth/themes/pix/splash.png
+cp $CAMDIR/back.png /etc/omxplayer/
 echo -e " ${GREEN}[DONE]${NC}"
 
 echo "Removing splash text from theme file..."
@@ -185,4 +179,5 @@ echo -e "        \/            \/     \/     \/ \/"
 
 echo "${BLUE}"
 echo "That's it! This Pi is setup for curl cam"
+echo "Time to reboot and setup config files"
 echo -e "${NC}"
