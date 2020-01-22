@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CURLREPO="https://github.com/jspaleta/fcc_camera_streams.git"
+CURLREPO="https://github.com/curlfairbanks/fcc_camera_streams.git"
 CAMDIR="/home/pi/curl_cam"
 CONFIG="/boot/config.txt"
 CMDLINE="/boot/cmdline.txt"
