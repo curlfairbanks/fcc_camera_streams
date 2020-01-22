@@ -6,6 +6,7 @@ After=local-fs.target
 AssertPathExists=/usr/local/bin/camera_control
 
 [Service]
+Type=idle
 ExecStart=/bin/bash -c "/usr/local/bin/camera_control"
 Restart=always
 RestartSec=1
