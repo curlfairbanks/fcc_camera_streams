@@ -154,7 +154,7 @@ fifo=os.fdopen(fd)
 # TODO: Select startup channel from argument 
 ##
 
-retval=os.system("sudo -n fbi --noverbose -a -T 1 /etc/omxplayer/back.jpg")
+retval=os.system("sudo -n fbi --noverbose -a -T 1 /etc/omxplayer/back.png")
 retval=activate_channel(current_channel)
 
 if ubtn: ubtn.when_pressed=up_btn_pressed
