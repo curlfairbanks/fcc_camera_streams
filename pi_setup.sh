@@ -126,8 +126,7 @@ echo ""
 
 #Set the hostname to a new default
 echo -n "${YELLOW}Setting hostname to [curlcampi]...."
-echo -n "curlcampi" > /etc/hostname
-/usr/bin/raspi-config nonint do_hostname curlcampi
+/usr/bin/raspi-config nonint do_hostname 'curlcampi'
 echo -e " ${GREEN}[DONE]${NC}"
 
 #SSH is probably already enabled if we are running this script. But lets be sure.
