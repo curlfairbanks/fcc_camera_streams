@@ -7,6 +7,7 @@ fi
 
 echo "Installing camera control script to /usr/local/bin"
 cp python/camera_control /usr/local/bin
+cp python/camera_netcontrol /usr/local/bin
 
 echo "Install camera shell scripts"
 cp shellscript/sidebyside.sh /usr/local/bin
@@ -16,6 +17,7 @@ echo "Installing systemd services into /etc/systemd/system"
 cp systemd/SHEET@.service /etc/systemd/system
 cp systemd/SIDEBYSIDE@.service /etc/systemd/system
 cp systemd/camera_control.service /etc/systemd/system
+cp systemd/camera_netcontrol.service /etc/systemd/system
 
 echo "reloading system daeamon"
 systemctl daemon-reload
