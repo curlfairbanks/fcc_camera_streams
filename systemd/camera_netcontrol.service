@@ -1,0 +1,17 @@
+[Unit]
+Description=Camera Network Controller service
+After=network-online.target
+Requires=camera_control.service
+
+AssertPathExists=/usr/local/bin/camera_netcontrol
+
+[Service]
+Type=idle
+ExecStart=/bin/bash -c "/usr/local/bin/camera_netcontrol"
+Restart=always
+RestartSec=1
+NoNewPrivileges=true
+
+[Install]
+WantedBy=sysinit.target
+

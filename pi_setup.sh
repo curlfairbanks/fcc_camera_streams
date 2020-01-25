@@ -21,6 +21,7 @@ apt-get install $PACKAGES -y
 #Cloning the curl_cam repository
 echo -e "${YELLOW}Cloning the curl_cam repository...${NC}"
 git clone $CURLREPO $CAMDIR
+chown -R pi:pi $CAMDIR
 
 #Make our default config dir for omxplayer
 echo -e -n "${YELLOW}Making /etc/omxplayer directory... ${NC}"
@@ -139,6 +140,7 @@ echo ""
 #Installing curl_cam
 echo -e -n "${YELLOW}Installing camera control script to /usr/local/bin ...${NC}"
 cp $CAMDIR/python/camera_control /usr/local/bin
+cp $CAMDIR/python/camera_netcontrol /usr/local/bin
 echo -e " ${GREEN}[DONE]${NC}"
 
 echo -e -n "${YELLOW}Install camera shell scripts...${NC}"
@@ -150,6 +152,7 @@ echo -e -n "${YELLOW}Installing systemd services into /etc/systemd/system ...${N
 cp $CAMDIR/systemd/SHEET@.service /etc/systemd/system
 cp $CAMDIR/systemd/SIDEBYSIDE@.service /etc/systemd/system
 cp $CAMDIR/systemd/camera_control.service /etc/systemd/system
+cp $CAMDIR/systemd/camera_netcontrol.service /etc/systemd/system
 echo -e " ${GREEN}[DONE]${NC}"
 
 echo -e -n "${YELLOW}Reloading system daeamon...${NC}"
@@ -158,6 +161,7 @@ echo -e " ${GREEN}[DONE]${NC}"
 
 echo -e "${YELLOW}Setting camera_control to start at boot..."
 /bin/systemctl enable camera_control
+/bin/systemctl enable camera_netcontrol
 echo "${GREEN}[DONE]${NC}"
 
 echo ""

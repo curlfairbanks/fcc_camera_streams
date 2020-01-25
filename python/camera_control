@@ -5,7 +5,7 @@ import os
 import time
 import sys
 import configparser
-
+import string
 ##
 # EDIT IF NEEDED
 ##
@@ -199,6 +199,22 @@ while True:
     flush_fifo(fifo)
     time.sleep(1)
     continue
+
+  if data[0].upper()=='^':
+    segments=string.split(data,'^')
+    chan=string.strip(segments[1])
+    try:
+      chan_index = channels.index(chan)
+      print("Jump to channel: {}".format(chan))
+      retval=activate_channel(chan_index)
+      if retval == 0:
+          current_channel=chan_index
+      else:
+          retval=activate_channel(current_channel)
+          print("Abort Jump: Channel Activate Failed: {}".format(chan))
+          
+    except:
+      print("Abort Jump: Channel Not Found: {}".format(chan))
 
 print("done")
 sys.stdout.flush()
