@@ -30,11 +30,11 @@ if [ -f /etc/omxplayer/credentials.config ]; then source /etc/omxplayer/credenti
 if [ -f /etc/omxplayer/SIDEBYSIDE@${1}.config ]; then
   source /etc/omxplayer/SIDEBYSIDE@${1}.config
   #left
-  omxplayer --aspect-mode Letterbox -o hdmi --win 0,0,960,1080 $LEFT_OPTIONS & 
+  omxplayer --aspect-mode fill -o hdmi --win 100,100,950,980 $LEFT_OPTIONS & 
   LEFT_PID=$!
   wait_left &
   #right
-  omxplayer --aspect-mode Letterbox -o hdmi --win 960,0,1920,1080 $RIGHT_OPTIONS  &
+  omxplayer --aspect-mode fill -o hdmi --win 970,100,1870,980 $RIGHT_OPTIONS  &
   RIGHT_PID=$!
   wait_right &
 else
