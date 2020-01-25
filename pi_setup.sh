@@ -161,6 +161,7 @@ echo -e " ${GREEN}[DONE]${NC}"
 
 echo -e "${YELLOW}Setting camera_control to start at boot..."
 /bin/systemctl enable camera_control
+/bin/systemctl enable camera_netcontrol
 echo "${GREEN}[DONE]${NC}"
 
 echo ""
