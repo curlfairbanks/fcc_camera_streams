@@ -34,7 +34,7 @@ cp /usr/share/plymouth/themes/pix/splash.png /usr/share/plymouth/themes/pix/spla
 echo -e " ${GREEN}[DONE]${NC}"
 
 echo -n "Copying custom splash image..."
-cp $CAMDIR/back.png /usr/share/plymouth/themes/pix/splash.png
+cp $CAMDIR/splash.png /usr/share/plymouth/themes/pix/splash.png
 cp $CAMDIR/back.png /etc/omxplayer/
 echo -e " ${GREEN}[DONE]${NC}"
 
@@ -136,6 +136,12 @@ echo -e "${YELLOW}Enabling SSH service...${NC}"
 /bin/systemctl enable ssh
 /bin/systemctl start ssh
 echo ""
+
+#Copy default configs
+echo ""
+echo -e -n "${YELLOW}Copying default config files...${NC}"
+cp $CAMDIR/configs/*.* /etc/omxplayer
+echo -e " ${GREEN}[DONE]${NC}"
 
 #Installing curl_cam
 echo -e -n "${YELLOW}Installing camera control script to /usr/local/bin ...${NC}"
