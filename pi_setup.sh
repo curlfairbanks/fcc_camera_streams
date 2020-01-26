@@ -170,6 +170,9 @@ echo -e "${YELLOW}Setting camera_control to start at boot..."
 /bin/systemctl enable camera_netcontrol
 echo "${GREEN}[DONE]${NC}"
 
+#Setup the pi_init script to be fresh for next update
+cp $CAMDIR/pi_init.sh /home/pi/
+
 echo ""
 
 echo ""
