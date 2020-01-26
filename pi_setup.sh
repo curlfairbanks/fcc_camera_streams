@@ -4,7 +4,7 @@ CURLREPO="https://github.com/curlfairbanks/fcc_camera_streams.git"
 CAMDIR="/home/pi/curl_cam"
 CONFIG="/boot/config.txt"
 CMDLINE="/boot/cmdline.txt"
-PACKAGES="vim screen fbi"
+PACKAGES="vim screen fbi omxplayer"
 THEME="/usr/share/plymouth/themes/pix/pix.script"
 
 NC=`tput sgr0`
