@@ -1,12 +1,14 @@
 #/bin/bash
 
+CREDDIR="/etc/curl_cam/creds"
+
 # Takes single argument
 if [ -z $1 ]; then
   echo "Requires camera name"
   exit 1
 fi
 
-if [ -f /etc/omxplayer/credentials.config ]; then source /etc/omxplayer/credentials.config; fi
+if [ -f $CREDDIR/credentials.config ]; then source $CREDDIR/credentials.config; fi
 if [ -f /etc/omxplayer/SHEET@${1}.config ]; then 
   source  /etc/omxplayer/SHEET@${1}.config 
   #Run omxplayer

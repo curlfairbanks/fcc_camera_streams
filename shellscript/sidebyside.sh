@@ -2,6 +2,7 @@
 # Takes single argument
 trap 'kill $RIGHT_PID; kill $LEFT_PID; exit' INT
 
+CREDDIR="/etc/curl_cam/creds"
 
 if [ -z $1 ]; then
   echo "Requires camera name"
@@ -26,7 +27,7 @@ wait_left(){
   exit 1
 }
 
-if [ -f /etc/omxplayer/credentials.config ]; then source /etc/omxplayer/credentials.config; fi
+if [ -f $CREDIDR/credentials.config ]; then source $CREDDIR/credentials.config; fi
 if [ -f /etc/omxplayer/SIDEBYSIDE@${1}.config ]; then
   source /etc/omxplayer/SIDEBYSIDE@${1}.config
   #left
