@@ -27,7 +27,7 @@ wait_left(){
   exit 1
 }
 
-if [ -f $CREDIDR/credentials.config ]; then source $CREDDIR/credentials.config; fi
+if [ -f $CREDDIR/credentials.config ]; then source $CREDDIR/credentials.config; fi
 if [ -f /etc/omxplayer/SIDEBYSIDE@${1}.config ]; then
   source /etc/omxplayer/SIDEBYSIDE@${1}.config
   #left
