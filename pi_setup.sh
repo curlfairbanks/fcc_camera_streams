@@ -19,9 +19,9 @@ apt-get upgrade -y
 apt-get install $PACKAGES -y
 
 #Cloning the curl_cam repository
-echo -e "${YELLOW}Cloning the curl_cam repository...${NC}"
-git clone $CURLREPO $CAMDIR
-chown -R pi:pi $CAMDIR
+#echo -e "${YELLOW}Cloning the curl_cam repository...${NC}"
+#git clone $CURLREPO $CAMDIR
+#chown -R pi:pi $CAMDIR
 
 #Make our default config dir for omxplayer
 echo -e -n "${YELLOW}Making /etc/omxplayer directory... ${NC}"
