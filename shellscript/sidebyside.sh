@@ -31,11 +31,11 @@ if [ -f $CREDDIR/credentials.config ]; then source $CREDDIR/credentials.config; 
 if [ -f /etc/omxplayer/SIDEBYSIDE@${1}.config ]; then
   source /etc/omxplayer/SIDEBYSIDE@${1}.config
   #left
-  omxplayer --aspect-mode fill -o hdmi --win 100,100,950,980 $LEFT_OPTIONS & 
+  omxplayer --aspect-mode fill -o hdmi --win 10,10,955,1070 $LEFT_OPTIONS & 
   LEFT_PID=$!
   wait_left &
   #right
-  omxplayer --aspect-mode fill -o hdmi --win 970,100,1870,980 $RIGHT_OPTIONS  &
+  omxplayer --aspect-mode fill -o hdmi --win 965,10,1910,1070 $RIGHT_OPTIONS  &
   RIGHT_PID=$!
   wait_right &
 else
