@@ -39,6 +39,9 @@ except BadPinFactory:
   sys.stdout.flush()
   ubtn=None
   dbtn=None
+ubtn_held=False
+bbtn_held=False
+
 
 
 ##################################
@@ -70,33 +73,58 @@ def flush_fifo(f):
   print("done flushing fifo")
   sys.stdout.flush()
 
+def set_dbtn_held(value):
+    global dbtn_held
+    dbtn_held=value
+    print("Setting dbtn_held:",dbtn_held)
+def set_ubtn_held(value):
+    global ubtn_held
+    ubtn_held=value
+    print("Setting ubtn_held:",ubtn_held)
+
 def down_btn_pressed():
-    global current_channel
     print("Caught Down Button Press") 
+    set_dbtn_held(False)
+
+def down_btn_released():
+    global current_channel
+    print("Caught Down Button Release") 
     print(ubtn)
     print(dbtn)
     sys.stdout.flush()
-    current_channel=channel_down(True)
+    if dbtn_held:
+      print("Down Button Long Press Detected, Ignoring Release Event",dbtn_held) 
+    else:
+      current_channel=channel_down(True)
 
 def down_btn_held():
     global current_channel
-    print("Caught Down Button Long Hold") 
+    print("Caught Down Button Long Hold")
+    set_dbtn_held(True)
     print(ubtn)
     print(dbtn)
     sys.stdout.flush()
     current_channel=channel_jump(default_index)
 
 def up_btn_pressed():
-    global current_channel
     print("Caught Up Button Press") 
+    set_ubtn_held(False)
+
+def up_btn_released():
+    global current_channel
+    print("Caught Up Button Release") 
     print(ubtn)
     print(dbtn)
     sys.stdout.flush()
-    current_channel=channel_up(True)
+    if ubtn_held:
+      print("Up Button Long Press Detected, Ignoring Release Event",ubtn_held) 
+    else:
+      current_channel=channel_up(True)
 
 def up_btn_held():
     global current_channel
     print("Caught Up Button Long Hold") 
+    set_ubtn_held(True)
     print(ubtn)
     print(dbtn)
     sys.stdout.flush()
@@ -189,13 +217,17 @@ retval=os.system("sudo -n fbi --noverbose -a -T 1 /etc/omxplayer/back.png")
 retval=activate_channel(current_channel)
 
 if ubtn: 
+    ubtn.when_released=up_btn_released
     ubtn.when_pressed=up_btn_pressed
     ubtn.when_held=up_btn_held
     ubtn.hold_time=2
+    ubtn_pressed=False
 if dbtn: 
+    dbtn.when_released=down_btn_released
     dbtn.when_pressed=down_btn_pressed
     dbtn.when_held=down_btn_held
     dbtn.hold_time=2
+    dbtn_pressed=False
 
 print("Entering fifo wait loop")
 sys.stdout.flush()
