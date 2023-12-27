@@ -133,7 +133,7 @@ def up_btn_held():
 def activate_channel(cnum):
   print("Activating {}".format(channels[cnum]))
   sys.stdout.flush()
-  retval=os.system("sudo -n systemctl start {}".format(channels[cnum]))
+  retval=os.system("sudo -n systemctl restart {}".format(channels[cnum]))
   return retval
 
 def channel_up(skip_broken=False):
