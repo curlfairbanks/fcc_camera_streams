@@ -21,7 +21,6 @@ channels=[
           "SIDEBYSIDE@1","SIDEBYSIDE@2","SIDEBYSIDE@3",
           "SIDEBYSIDE@4","SIDEBYSIDE@5","SIDEBYSIDE@6"
          ]
-
 fifo_path="/tmp/cameractl.fifo"
 
 # GPIO Button pins
@@ -40,6 +39,7 @@ except BadPinFactory:
   sys.stdout.flush()
   ubtn=None
   dbtn=None
+
 
 ##################################
 ##
@@ -78,6 +78,14 @@ def down_btn_pressed():
     sys.stdout.flush()
     current_channel=channel_down(True)
 
+def down_btn_held():
+    global current_channel
+    print("Caught Down Button Long Hold") 
+    print(ubtn)
+    print(dbtn)
+    sys.stdout.flush()
+    current_channel=channel_jump(default_index)
+
 def up_btn_pressed():
     global current_channel
     print("Caught Up Button Press") 
@@ -85,6 +93,14 @@ def up_btn_pressed():
     print(dbtn)
     sys.stdout.flush()
     current_channel=channel_up(True)
+
+def up_btn_held():
+    global current_channel
+    print("Caught Up Button Long Hold") 
+    print(ubtn)
+    print(dbtn)
+    sys.stdout.flush()
+    current_channel=channel_jump(default_index)
 
 def activate_channel(cnum):
   print("Activating {}".format(channels[cnum]))
@@ -145,6 +161,21 @@ def channel_down(skip_broken=False):
     return current_channel
   return next_channel
 
+def channel_jump(requested_channel=None):
+  global current_channel
+  if requested_channel:
+    retval=activate_channel(requested_channel)
+    if retval == 0: 
+      print("chan Jump: {}:{} -> {}:{}".format(current_channel,channels[current_channel],requested_channel,channels[requested_channel]))
+      sys.stdout.flush()
+      return requested_channel
+    else:
+      print("ERROR: chan Jump: {}:{} -> {}:{}".format(current_channel,channels[current_channel],requested_channel,channels[requested_channel]))
+      sys.stdout.flush()
+      return current_channel
+  return current_channel
+
+
 if os.path.exists(fifo_path): os.remove(fifo_path) 
 
 os.mkfifo(fifo_path)
@@ -157,8 +188,14 @@ fifo=os.fdopen(fd)
 retval=os.system("sudo -n fbi --noverbose -a -T 1 /etc/omxplayer/back.png")
 retval=activate_channel(current_channel)
 
-if ubtn: ubtn.when_pressed=up_btn_pressed
-if dbtn: dbtn.when_pressed=down_btn_pressed
+if ubtn: 
+    ubtn.when_pressed=up_btn_pressed
+    ubtn.when_held=up_btn_held
+    ubtn.hold_time=2
+if dbtn: 
+    dbtn.when_pressed=down_btn_pressed
+    dbtn.when_held=down_btn_held
+    dbtn.hold_time=2
 
 print("Entering fifo wait loop")
 sys.stdout.flush()
